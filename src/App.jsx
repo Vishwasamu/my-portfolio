@@ -5,7 +5,7 @@ import Education from './components/sections/education';
 import CustomCursor from './components/CustomCursor';
 import Certificate from './components/sections/certificate';
 import Experience from './components/sections/experience';
-import Projects from './components/sections/projects';
+import Projects from './components/sections/Projects';
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
