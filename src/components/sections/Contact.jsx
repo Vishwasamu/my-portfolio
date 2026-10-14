@@ -11,10 +11,12 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus({ type: '', message: '' });
 
-    // Replace these with your EmailJS credentials
-    const serviceId = 'service_203k8kk'; // Get from EmailJS dashboard
-    const templateId = 'template_9ekkkus'; // Get from EmailJS dashboard
-    const publicKey = 'lpPJ72ssd3a57S3_E'; // Get from EmailJS dashboard
+    const serviceId = 'service_203k8kk';
+    const templateId = 'template_9ekkkus';
+    const publicKey = 'lpPJ72ssd3a57S3_E';
+
+    // FormData ekata aluthin recipient email eka add karaganna puluwan (Optional)
+    // Nathnam EmailJS dashboard eke template setting wala To Email eka vishwasamuditha8@gmail.com widiyata denna.
 
     emailjs.sendForm(serviceId, templateId, form.current, publicKey)
       .then((result) => {
@@ -51,6 +53,9 @@ const Contact = () => {
         )}
         
         <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-4">
+          {/* Hidden input to ensure email goes to your specific address if template supports it */}
+          <input type="hidden" name="to_email" value="vishwasamuditha8@gmail.com" />
+
           <input 
             type="text" 
             name="from_name"

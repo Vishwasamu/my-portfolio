@@ -28,7 +28,7 @@ const Certificate = () => {
       icon: 'fa-react',
       color: '#61dafb',
       description: 'Advanced React concepts, Next.js, and modern frontend development',
-      image: '/assets/certificates/react.jpg',
+      image: 'certificate02.jpg',
       link: '#',
       badge: '🥈',
       level: 'Intermediate'
