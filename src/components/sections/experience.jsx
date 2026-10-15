@@ -1,7 +1,7 @@
 // src/components/sections/experience.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import ScrollAnimation from '../ScrollAnimation';
-import csslLogo from '../../assets/logo/cssllogo.png'; // CSSL logo path (or update image variable)
+import csslLogo from '../../assets/logo/csslLogo.png'; // CSSL logo path (or update image variable)
 
 // Counter Component for smooth number animation
 const Counter = ({ end, duration = 2000 }) => {
