@@ -1,5 +1,9 @@
 import React from 'react';
 import ScrollAnimation from '../ScrollAnimation';
+// Import your logos from the assets folder
+import esuLogo from '../assets/logo/esu Logo.png';
+// Add additional logo imports here as needed, for example:
+// import schoolLogo from '../assets/logo/school-logo.png';
 
 const Education = () => {
   const educationData = [
@@ -10,7 +14,8 @@ const Education = () => {
       period: "2014 (Aug)",
       description: "Completed Ordinary Level education with a strong foundation in mathematics and sciences.",
       icon: "fa-graduation-cap",
-      logo: "📚",
+      logoType: "emoji",
+      logo: "📚", // Replace with imported image if available
       achievements: [
         "Passed with Distinction in Mathematics",
         "Excellence in Science Subjects",
@@ -24,6 +29,7 @@ const Education = () => {
       period: "2017 (Dec)",
       description: "Completed Advanced Level education specializing in the technology stream.",
       icon: "fa-graduation-cap",
+      logoType: "emoji",
       logo: "🎓",
       achievements: [
         "Specialized in Mathematics, Physics, and ICT",
@@ -38,6 +44,7 @@ const Education = () => {
       period: "2021 - 2022",
       description: "Professional certification in engineering draughtsmanship and technical drawing.",
       icon: "fa-drafting-compass",
+      logoType: "emoji",
       logo: "📐",
       achievements: [
         "Technical Drawing Excellence",
@@ -52,7 +59,8 @@ const Education = () => {
       period: "2022",
       description: "Completed English language diploma to enhance communication and professional skills.",
       icon: "fa-language",
-      logo: "🇬🇧",
+      logoType: "image",
+      logo: esuLogo, // Using your ESU logo asset
       achievements: [
         "Advanced English Proficiency",
         "Business Communication Skills",
@@ -66,7 +74,8 @@ const Education = () => {
       period: "2023 (Jul) - 2025 (Jan)",
       description: "Higher National Diploma in Software Engineering with Pearson UK accreditation.",
       icon: "fa-code",
-      logo: "💻",
+      logoType: "image",
+      logo: esuLogo, // Using your ESU logo asset
       achievements: [
         "Full Stack Development",
         "Agile Methodologies",
@@ -81,9 +90,10 @@ const Education = () => {
       period: "2025 (Feb) - 2026 (Jan)",
       description: "Bachelor of Engineering with Honours in Software Engineering from London Metropolitan University.",
       icon: "fa-university",
-      logo: "🏛️",
+      logoType: "image",
+      logo: esuLogo, // Using your ESU logo asset (or replace with a London Met logo variable if added)
       achievements: [
-        "Advanced Software Engineering",
+        "First Class Honours",
         "Cloud Architecture",
         "System Design and Implementation",
         "Research and Development"
@@ -114,7 +124,11 @@ const Education = () => {
                 <div className="timeline-content">
                   <div className="timeline-header">
                     <div className="timeline-logo">
-                      <span>{edu.logo}</span>
+                      {edu.logoType === 'image' ? (
+                        <img src={edu.logo} alt={edu.institution} className="institution-logo-img" />
+                      ) : (
+                        <span>{edu.logo}</span>
+                      )}
                     </div>
                     <div className="timeline-title">
                       <h3>{edu.degree}</h3>
