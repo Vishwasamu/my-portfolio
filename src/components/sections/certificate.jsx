@@ -6,6 +6,7 @@ import uom01 from "../../assets/certificates/uom01.jpeg";
 import certificate01 from "../../assets/certificates/certificate01.jpeg";
 import certificate02 from "../../assets/certificates/certificate02.jpeg";
 import certificate03 from "../../assets/certificates/certificate03.jpeg";
+import certificate04 from "../../assets/certificates/certificate04.jpeg"; 
 import certificate05 from "../../assets/certificates/certificate05.jpeg";
 
 // Counter Component for smooth number animation
@@ -130,13 +131,13 @@ const Certificate = () => {
     },
     {
       id: 6,
-      title: 'DevOps Essentials',
-      issuer: 'Docker',
-      date: '2024',
+      title: 'Cloud Computing Foundations',
+      issuer: 'Great Learning Academy',
+      date: '2023',
       icon: 'fa-docker',
       color: '#2496ed',
-      description: 'Containerization, CI/CD pipelines, and infrastructure as code',
-      image: '/assets/certificates/devops.jpg',
+      description: 'Gained foundational knowledge in cloud computing, including cloud service models, deployment strategies, and cloud architecture principles.',
+      image: certificate04,
       link: '#',
       badge: '🥈',
       level: 'Intermediate'
@@ -149,7 +150,7 @@ const Certificate = () => {
       icon: 'fa-git-alt',
       color: '#f05032',
       description: 'Version control workflows, branching strategies, and collaboration',
-      image: '/assets/certificates/git.jpg',
+      image: certificate05,
       link: '#',
       badge: '🥇',
       level: 'Advanced'

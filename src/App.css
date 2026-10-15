@@ -1931,17 +1931,24 @@ select,
   margin-bottom: 3.5rem;
 }
 
+/* ============================================ */
+/* GRID - All cards same size                   */
+/* ============================================ */
 .certificate-grid-pack {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   margin-bottom: 3rem;
   perspective: 1000px;
+  align-items: stretch; /* 👈 Cards එකම උසට */
 }
 
 .cert-card-pack-wrapper {
   transform-style: preserve-3d;
   transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  height: 100%; /* 👈 Full height */
+  display: flex; /* 👈 Flex */
+  width: 100%;
 }
 
 .cert-card-pack-wrapper:hover {
@@ -1952,8 +1959,10 @@ select,
 .cert-card-pack {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100%; /* 👈 Full height */
   transform-style: preserve-3d;
+  display: flex; /* 👈 Flex */
+  flex-direction: column;
 }
 
 .card-stack {
@@ -2019,6 +2028,9 @@ select,
   transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 1;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  height: 100%; /* 👈 Full height */
+  display: flex; /* 👈 Flex */
+  flex-direction: column;
 }
 
 .cert-card-pack-wrapper:hover .cert-card-main {
@@ -2053,12 +2065,16 @@ select,
   letter-spacing: 0.5px;
 }
 
+/* ============================================ */
+/* IMAGE - Same height for all cards            */
+/* ============================================ */
 .certificate-image-wrapper {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 200px; /* 👈 එකම උස */
   overflow: hidden;
   background: rgba(0, 100, 255, 0.02);
+  flex-shrink: 0; /* 👈 Image එක shrink නොවෙන්න */
 }
 
 .certificate-image {
@@ -2096,39 +2112,67 @@ select,
   opacity: 0.3;
 }
 
+/* ============================================ */
+/* CONTENT - Flex column + flex: 1              */
+/* ============================================ */
 .certificate-content {
   padding: 1.5rem;
   position: relative;
   z-index: 1;
+  display: flex; /* 👈 Flex */
+  flex-direction: column;
+  flex: 1; /* 👈 Content එක card එකේ ඉතිරි ඉඩ පුරවන්න */
 }
 
+/* Title - Fixed height (2 lines) */
 .certificate-content h3 {
   color: #ffffff;
   font-size: 1.15rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
+  min-height: 3.2rem; /* 👈 Title එක line 2කට එකම උස */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
 }
 
+/* Issuer - Fixed height (2 lines) */
 .cert-issuer {
   color: rgba(255, 255, 255, 0.3);
   font-size: 0.85rem;
   margin-bottom: 0.8rem;
+  min-height: 2.4rem; /* 👈 Issuer එකත් එකම උස */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
 }
 
+/* Description - Fixed height (3 lines) */
 .cert-description {
   color: rgba(255, 255, 255, 0.4);
   font-size: 0.9rem;
   line-height: 1.7;
   margin-bottom: 1rem;
+  min-height: 4.6rem; /* 👈 Description එක line 3කට එකම උස */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
+/* Footer - Bottom එකට තල්ලු කරන්න */
 .cert-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.5rem;
+  margin-top: auto; /* 👈 Footer එක පහළට තල්ලු කරනවා */
   flex-wrap: wrap;
   gap: 0.5rem;
+  padding-top: 0.5rem;
 }
 
 .cert-date {
@@ -2188,6 +2232,9 @@ select,
   opacity: 1;
 }
 
+/* ============================================ */
+/* STATS                                        */
+/* ============================================ */
 .certificate-stats-pack {
   display: flex;
   justify-content: center;
@@ -2235,6 +2282,30 @@ select,
   background: rgba(255, 255, 255, 0.04);
 }
 
+/* ============================================ */
+/* RESPONSIVE                                   */
+/* ============================================ */
+@media (max-width: 768px) {
+  .certificate-grid-pack {
+    grid-template-columns: 1fr;
+  }
+
+  .certificate-image-wrapper {
+    height: 180px;
+  }
+
+  .certificate-stats-pack {
+    gap: 1.5rem;
+  }
+
+  .cert-stat-divider-pack {
+    display: none;
+  }
+
+  .cert-stat-pack {
+    flex: 1 1 40%;
+  }
+}
 /* ============================================ */
 /* SKILLS SECTION                              */
 /* ============================================ */

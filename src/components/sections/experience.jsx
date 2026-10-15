@@ -1,7 +1,7 @@
 // src/components/sections/experience.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import ScrollAnimation from '../ScrollAnimation';
-import csslLogo from '../../assets/logo/csslLogo.png'; // CSSL logo path (or update image variable)
+import csslLogo from '../../assets/logo/csslLogo.png'; 
 
 // Counter Component for smooth number animation
 const Counter = ({ end, duration = 2000 }) => {
@@ -64,7 +64,7 @@ const Experience = () => {
       period: 'Nov 2025 - Apr 2026',
       location: 'Sri Lanka',
       icon: 'fa-users',
-      logo: csslLogo, // Logo variable set for CSSL
+      logo: csslLogo, 
       color: '#0066ff',
       description: 'Served as Assistant Secretary in Events, driving national-level ICT youth initiatives, managing event coordination, and fostering professional student chapters.',
       achievements: [
@@ -82,7 +82,7 @@ const Experience = () => {
       period: 'May 2022 - Nov 2022',
       location: 'Matara, Sri Lanka',
       icon: 'fa-drafting-compass',
-      logo: null, // Icon will be used instead of logo
+      logo: null, 
       color: '#ea4335',
       description: 'Gained hands-on professional experience in draughting, technical drawing, and structural design support.',
       achievements: [
@@ -104,36 +104,56 @@ const Experience = () => {
 
   return (
     <>
-      {/* Dynamic CSS Styles for Experience Logos */}
-     <style>{`
+      {/* Equal Sized Box for both Logos and Icons */}
+      <style>{`
+        .experience-icon {
+          width: 80px !important;
+          height: 80px !important;
+          min-width: 80px !important;
+          min-height: 80px !important;
+          border-radius: 16px;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          flex-shrink: 0;
+          padding: 0 !important;
+        }
+
         .experience-logo-box {
-          width: 85px;          /* Box එකේ පළල වැඩි කර ඇත */
-          height: 85px;         /* Box එකේ උස වැඩි කර ඇත */
-          border-radius: 14px;
+          width: 100%;
+          height: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
-          overflow: hidden;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          flex-shrink: 0;
+          padding: 10px;
         }
 
         .experience-logo-box img {
-          width: 70px;          
-          height: 70px;         
+          width: 100%;
+          height: 100%;
           object-fit: contain;
           display: block;
         }
 
+        .experience-icon i {
+          font-size: 2rem;
+        }
+
         @media screen and (max-width: 768px) {
-          .experience-logo-box {
-            width: 60px;
-            height: 60px;
+          .experience-icon {
+            width: 65px !important;
+            height: 65px !important;
+            min-width: 65px !important;
+            min-height: 65px !important;
+            border-radius: 12px;
           }
-          .experience-logo-box img {
-            width: 48px;
-            height: 48px;
+
+          .experience-logo-box {
+            padding: 8px;
+          }
+
+          .experience-icon i {
+            font-size: 1.6rem;
           }
         }
       `}</style>
