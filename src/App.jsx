@@ -182,7 +182,7 @@ function App() {
       <nav className={`floating-nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-content">
           <span className="nav-logo" onClick={() => scrollToSection('home')}>
-            VS
+            Vishwa Samuditha
           </span>
           <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
             <a 

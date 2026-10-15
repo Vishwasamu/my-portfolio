@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ScrollAnimation from '../ScrollAnimation';
-import vijithaCentralLogo from '../../assets/education/vijitha-central-logo.png'; // Import the logo image
+import vijithaCentralLogo from '../../assets/education/vijitha-central-logo.png'; 
+import esoftLogo from '../../assets/logo/esoftLogo.png';
+import londonMetLogo from '../../assets/logo/lmuLogo.png';
+import pearsonLogo from '../../assets/logo/pearsonLogo.png';
 
 // Counter Component for smooth number animation
 const Counter = ({ end, duration = 2000 }) => {
@@ -61,13 +64,11 @@ const Education = () => {
       degree: "GCE Ordinary Level",
       institution: "Mr/Vijitha Central College, Dickwella",
       period: "2014 (Aug)",
-      description: "Completed Ordinary Level education with a strong foundation in mathematics and sciences.",
+      description: "Completed Ordinary Level education.",
       icon: "fa-graduation-cap",
       logo: vijithaCentralLogo, // Using the school logo
       achievements: [
-        "Passed with Distinction in Mathematics",
-        "Excellence in Science Subjects",
-        "Top 10% of the batch"
+        
       ]
     },
     {
@@ -75,13 +76,11 @@ const Education = () => {
       degree: "GCE Advanced Level",
       institution: "Mr/Vijitha Central College, Dickwella",
       period: "2017 (Dec)",
-      description: "Completed Advanced Level education specializing in the technology stream.",
+      description: "Completed Advanced Level Exam in the Biology Science stream.",
       icon: "fa-graduation-cap",
       logo: vijithaCentralLogo, // Using the school logo
       achievements: [
-        "Specialized in Mathematics, Physics, and ICT",
-        "Advanced Level Certification",
-        "Foundation for higher education"
+        
       ]
     },
     {
@@ -105,7 +104,7 @@ const Education = () => {
       period: "2022",
       description: "Completed English language diploma to enhance communication and professional skills.",
       icon: "fa-language",
-      logo: "/images/uk-flag.png",
+      logo: esoftLogo,
       achievements: [
         "Advanced English Proficiency",
         "Business Communication Skills",
@@ -119,7 +118,7 @@ const Education = () => {
       period: "2023 (Jul) - 2025 (Jan)",
       description: "Higher National Diploma in Software Engineering with Pearson UK accreditation.",
       icon: "fa-code",
-      logo: "💻", 
+      logo: pearsonLogo,
       achievements: [
         "Full Stack Development",
         "Agile Methodologies",
@@ -134,7 +133,7 @@ const Education = () => {
       period: "2025 (Feb) - 2026 (Jan)",
       description: "Bachelor of Engineering with Honours in Software Engineering from London Metropolitan University.",
       icon: "fa-university",
-      logo: "🏛️", 
+      logo: londonMetLogo,
       achievements: [
         "Advanced Software Engineering",
         "Cloud Architecture",
@@ -156,13 +155,13 @@ const Education = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          min-width: 40px;
-          min-height: 40px;
+          min-width: 98px;
+          min-height: 98px;
         }
 
         .timeline-logo img {
-          width: 36px;          
-          height: 36px;          
+          width: 98px;          
+          height: 98px;          
           object-fit: contain;   
           display: block;
         }
