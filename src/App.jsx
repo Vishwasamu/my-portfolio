@@ -289,8 +289,8 @@ function App() {
               <button className="btn-primary" onClick={() => scrollToSection('contact')}>
                 <i className="fas fa-paper-plane"></i> Let's Talk
               </button>
-              <button className="btn-secondary" onClick={() => window.open('#', '_blank')}>
-                <i className="fas fa-file-pdf"></i> View CV
+             <button className="btn-secondary" onClick={() => window.open('https://drive.google.com/file/d/1YtG6FINK-SL_x3qwcgG6fpdal0rCjC5y/view?usp=drive_link', '_blank')}>
+  <i className="fas fa-file-pdf"></i> View CV
               </button>
             </div>
           </ScrollAnimation>

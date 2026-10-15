@@ -1,6 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ScrollAnimation from '../ScrollAnimation';
-import esuLogo from '../../assets/logo/esu Logo.png';
+
+// Counter Component for smooth number animation
+const Counter = ({ end, duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const counterRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime = null;
+    const animateCount = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percentage = Math.min(progress / duration, 1);
+      
+      const currentCount = Math.floor(percentage * end);
+      setCount(currentCount);
+
+      if (percentage < 1) {
+        requestAnimationFrame(animateCount);
+      } else {
+        setCount(end);
+      }
+    };
+
+    requestAnimationFrame(animateCount);
+  }, [isVisible, end, duration]);
+
+  return <span ref={counterRef}>{count}</span>;
+};
 
 const Education = () => {
   const educationData = [
@@ -11,8 +62,7 @@ const Education = () => {
       period: "2014 (Aug)",
       description: "Completed Ordinary Level education with a strong foundation in mathematics and sciences.",
       icon: "fa-graduation-cap",
-      logoType: "emoji",
-      logo: "📚",
+      logo: "📚", 
       achievements: [
         "Passed with Distinction in Mathematics",
         "Excellence in Science Subjects",
@@ -26,7 +76,6 @@ const Education = () => {
       period: "2017 (Dec)",
       description: "Completed Advanced Level education specializing in the technology stream.",
       icon: "fa-graduation-cap",
-      logoType: "emoji",
       logo: "🎓",
       achievements: [
         "Specialized in Mathematics, Physics, and ICT",
@@ -41,7 +90,6 @@ const Education = () => {
       period: "2021 - 2022",
       description: "Professional certification in engineering draughtsmanship and technical drawing.",
       icon: "fa-drafting-compass",
-      logoType: "emoji",
       logo: "📐",
       achievements: [
         "Technical Drawing Excellence",
@@ -56,8 +104,7 @@ const Education = () => {
       period: "2022",
       description: "Completed English language diploma to enhance communication and professional skills.",
       icon: "fa-language",
-      logoType: "image",
-      logo: esuLogo,
+      logo: "/images/uk-flag.png",
       achievements: [
         "Advanced English Proficiency",
         "Business Communication Skills",
@@ -71,8 +118,7 @@ const Education = () => {
       period: "2023 (Jul) - 2025 (Jan)",
       description: "Higher National Diploma in Software Engineering with Pearson UK accreditation.",
       icon: "fa-code",
-      logoType: "image",
-      logo: esuLogo,
+      logo: "💻", 
       achievements: [
         "Full Stack Development",
         "Agile Methodologies",
@@ -87,10 +133,9 @@ const Education = () => {
       period: "2025 (Feb) - 2026 (Jan)",
       description: "Bachelor of Engineering with Honours in Software Engineering from London Metropolitan University.",
       icon: "fa-university",
-      logoType: "image",
-      logo: esuLogo,
+      logo: "🏛️", 
       achievements: [
-        "First Class Honours",
+        "Advanced Software Engineering",
         "Cloud Architecture",
         "System Design and Implementation",
         "Research and Development"
@@ -98,82 +143,123 @@ const Education = () => {
     }
   ];
 
+  // Dynamic values calculation
+  const totalQualifications = educationData.length;
+  const totalInstitutions = new Set(educationData.map(e => e.institution)).size;
+  const totalYears = 12;
+  const totalDegrees = 2; // BEng and HND/Diplomas based on count
+
   return (
-    <section id="education" className="section education-modern">
-      <ScrollAnimation animation="fade-up">
-        <div className="education-header">
-          <span className="section-tag">Education</span>
-          <h2>My Education Journey</h2>
-          <p>Building a strong foundation in software engineering and technology</p>
-        </div>
+    <>
+      {/* CSS Styles මෙතැනින් එකතු කර ඇත */}
+      <style>{`
+        .timeline-logo {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 40px;
+          min-height: 40px;
+        }
 
-        <div className="timeline">
-          {educationData.map((edu, index) => (
-            <ScrollAnimation 
-              key={edu.id} 
-              animation="fade-up" 
-              delay={100 + index * 100}
-            >
-              <div className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}>
-                <div className="timeline-badge">
-                  <i className={`fas ${edu.icon}`}></i>
-                </div>
-                <div className="timeline-content">
-                  <div className="timeline-header">
-                    <div className="timeline-logo">
-                      {edu.logoType === 'image' ? (
-                        <img src={edu.logo} alt={edu.institution} className="institution-logo-img" />
-                      ) : (
-                        <span>{edu.logo}</span>
-                      )}
-                    </div>
-                    <div className="timeline-title">
-                      <h3>{edu.degree}</h3>
-                      <span className="institution">{edu.institution}</span>
-                    </div>
-                  </div>
-                  <div className="timeline-period">
-                    <i className="far fa-calendar-alt"></i>
-                    <span>{edu.period}</span>
-                  </div>
-                  <p className="timeline-description">{edu.description}</p>
-                  <div className="timeline-achievements">
-                    {edu.achievements.map((achievement, idx) => (
-                      <span key={idx} className="achievement-tag">
-                        <i className="fas fa-check-circle"></i>
-                        {achievement}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </ScrollAnimation>
-          ))}
-        </div>
+        .timeline-logo img {
+          width: 36px;          
+          height: 36px;          
+          object-fit: contain;   
+          display: block;
+        }
 
-        {/* Quick Stats */}
-        <ScrollAnimation animation="fade-up" delay={400}>
-          <div className="education-stats">
-            <div className="stat-card">
-              <span className="stat-number">6</span>
-              <span className="stat-label">Qualifications</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-number">4</span>
-              <span className="stat-label">Institutions</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-number">12+</span>
-              <span className="stat-label">Years of Study</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-number">2</span>
-              <span className="stat-label">Degrees</span>
-            </div>
+        .timeline-logo span {
+          font-size: 1.5rem;    
+        }
+      `}</style>
+
+      <section id="education" className="section education-modern">
+        <ScrollAnimation animation="fade-up">
+          <div className="education-header">
+            <span className="section-tag">Education</span>
+            <h2>My Education Journey</h2>
+            <p>Building a strong foundation in software engineering and technology</p>
           </div>
+
+          <div className="timeline">
+            {educationData.map((edu, index) => (
+              <ScrollAnimation 
+                key={edu.id} 
+                animation="fade-up" 
+                delay={100 + index * 100}
+              >
+                <div className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}>
+                  <div className="timeline-badge">
+                    <i className={`fas ${edu.icon}`}></i>
+                  </div>
+                  <div className="timeline-content">
+                    <div className="timeline-header">
+                      <div className="timeline-logo">
+                        {edu.logo && (edu.logo.startsWith('/') || edu.logo.startsWith('http') || edu.logo.endsWith('.png') || edu.logo.endsWith('.jpg') || edu.logo.endsWith('.svg')) ? (
+                          <img 
+                            src={edu.logo} 
+                            alt={edu.degree} 
+                          />
+                        ) : (
+                          <span>{edu.logo}</span>
+                        )}
+                      </div>
+                      <div className="timeline-title">
+                        <h3>{edu.degree}</h3>
+                        <span className="institution">{edu.institution}</span>
+                      </div>
+                    </div>
+                    <div className="timeline-period">
+                      <i className="far fa-calendar-alt"></i>
+                      <span>{edu.period}</span>
+                    </div>
+                    <p className="timeline-description">{edu.description}</p>
+                    <div className="timeline-achievements">
+                      {edu.achievements.map((achievement, idx) => (
+                        <span key={idx} className="achievement-tag">
+                          <i className="fas fa-check-circle"></i>
+                          {achievement}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </ScrollAnimation>
+            ))}
+          </div>
+
+          {/* Quick Stats with Counter Animation */}
+          <ScrollAnimation animation="fade-up" delay={400}>
+            <div className="education-stats">
+              <div className="stat-card">
+                <span className="stat-number">
+                  <Counter end={totalQualifications} />
+                </span>
+                <span className="stat-label">Qualifications</span>
+              </div>
+              <div className="stat-card">
+                <span className="stat-number">
+                  <Counter end={totalInstitutions} />
+                </span>
+                <span className="stat-label">Institutions</span>
+              </div>
+              <div className="stat-card">
+                <span className="stat-number">
+                  <Counter end={totalYears} />+
+                </span>
+                <span className="stat-label">Years of Study</span>
+              </div>
+              <div className="stat-card">
+                <span className="stat-number">
+                  <Counter end={totalDegrees} />
+                </span>
+                <span className="stat-label">Degrees</span>
+              </div>
+            </div>
+          </ScrollAnimation>
         </ScrollAnimation>
-      </ScrollAnimation>
-    </section>
+      </section>
+    </>
   );
 };
 

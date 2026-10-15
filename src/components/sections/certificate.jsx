@@ -1,14 +1,69 @@
 // src/components/sections/certificate.jsx
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ScrollAnimation from '../ScrollAnimation';
 // Image එක import කරන්න
 import uom01 from "../../assets/certificates/uom01.jpeg";
 import certificate01 from "../../assets/certificates/certificate01.jpeg";
 import certificate02 from "../../assets/certificates/certificate02.jpeg";
 import certificate03 from "../../assets/certificates/certificate03.jpeg";
+import certificate05 from "../../assets/certificates/certificate05.jpeg";
 
+// Counter Component for smooth number animation
+const Counter = ({ end, duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const counterRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime = null;
+    const animateCount = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percentage = Math.min(progress / duration, 1);
+      
+      // Easing effect for smooth counting
+      const currentCount = Math.floor(percentage * end);
+      setCount(currentCount);
+
+      if (percentage < 1) {
+        requestAnimationFrame(animateCount);
+      } else {
+        setCount(end); // Ensure exact final number
+      }
+    };
+
+    requestAnimationFrame(animateCount);
+  }, [isVisible, end, duration]);
+
+  return <span ref={counterRef}>{count}</span>;
+};
 
 const Certificate = () => {
+  const [showAll, setShowAll] = useState(false);
+
   const certificates = [
     {
       id: 1,
@@ -25,7 +80,7 @@ const Certificate = () => {
     },
     {
       id: 2,
-      title: 'Introduction to',
+      title: 'Introduction to React',
       issuer: 'Sololearn',
       date: '2023',
       icon: 'fa-react',
@@ -49,8 +104,8 @@ const Certificate = () => {
     },
     {
       id: 4,
-      title: 'Python for Data Science',
-      issuer: 'Coursera',
+      title: 'Human Resource Management',
+      issuer: 'Greate Learning Academy',
       date: '2023',
       icon: 'fa-python',
       color: '#3776ab',
@@ -62,13 +117,13 @@ const Certificate = () => {
     },
     {
       id: 5,
-      title: 'UI/UX Design Fundamentals',
-      issuer: 'Google',
-      date: '2023',
+      title: 'Thinkfest Ideathon & Hackathon 2025',
+      issuer: 'ESU Kandy Branch',
+      date: '2025',
       icon: 'fa-paint-brush',
       color: '#ea4335',
       description: 'User experience design, prototyping, and design thinking',
-      image: '/assets/certificates/uiux.jpg',
+      image: certificate05,
       link: '#',
       badge: '🥉',
       level: 'Beginner'
@@ -85,8 +140,30 @@ const Certificate = () => {
       link: '#',
       badge: '🥈',
       level: 'Intermediate'
+    },
+    {
+      id: 7,
+      title: 'Advanced Git & GitHub',
+      issuer: 'GitHub',
+      date: '2024',
+      icon: 'fa-git-alt',
+      color: '#f05032',
+      description: 'Version control workflows, branching strategies, and collaboration',
+      image: '/assets/certificates/git.jpg',
+      link: '#',
+      badge: '🥇',
+      level: 'Advanced'
     }
   ];
+
+  // Slice certificates to show only 6 initially unless showAll is true
+  const displayedCertificates = showAll ? certificates : certificates.slice(0, 6);
+
+  // Dynamic values calculation
+  const totalCertificates = certificates.length;
+  const totalPlatforms = new Set(certificates.map(c => c.issuer)).size;
+  const totalHours = 100;
+  const totalLevels = 3;
 
   return (
     <section className="certificate-section" id="certificates">
@@ -101,7 +178,7 @@ const Certificate = () => {
 
         {/* Card Pack Grid */}
         <div className="certificate-grid-pack">
-          {certificates.map((cert, index) => (
+          {displayedCertificates.map((cert, index) => (
             <ScrollAnimation 
               key={cert.id} 
               animation="fade-up" 
@@ -118,9 +195,6 @@ const Certificate = () => {
 
                 {/* Main Card */}
                 <div className="cert-card-main">
-                  {/* Badge */}
-                  
-
                   {/* Image */}
                   <div className="certificate-image-wrapper">
                     <img 
@@ -163,28 +237,56 @@ const Certificate = () => {
           ))}
         </div>
 
-        {/* Certificate Stats */}
+        {/* See More / See Less Button */}
+        {certificates.length > 6 && (
+          <div className="certificate-toggle-container" style={{ textAlign: 'center', marginTop: '40px' }}>
+            <button 
+              onClick={() => setShowAll(!showAll)} 
+              className="certificate-toggle-btn"
+              style={{
+                padding: '12px 28px',
+                background: 'var(--primary-color, #0066ff)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: '600',
+                transition: 'background 0.3s ease'
+              }}
+            >
+              {showAll ? 'See Less' : `See More (${certificates.length - 6} More)`}
+            </button>
+          </div>
+        )}
+
+        {/* Certificate Stats with Counter Animation */}
         <ScrollAnimation animation="fade-up" delay={600}>
           <div className="certificate-stats-pack">
             <div className="cert-stat-pack">
-              <span className="cert-stat-number">{certificates.length}+</span>
+              <span className="cert-stat-number">
+                <Counter end={totalCertificates} />+
+              </span>
               <span className="cert-stat-label">Certifications</span>
             </div>
             <div className="cert-stat-divider-pack"></div>
             <div className="cert-stat-pack">
               <span className="cert-stat-number">
-                {new Set(certificates.map(c => c.issuer)).size}+
+                <Counter end={totalPlatforms} />+
               </span>
               <span className="cert-stat-label">Platforms</span>
             </div>
             <div className="cert-stat-divider-pack"></div>
             <div className="cert-stat-pack">
-              <span className="cert-stat-number">100+</span>
+              <span className="cert-stat-number">
+                <Counter end={totalHours} />+
+              </span>
               <span className="cert-stat-label">Hours of Learning</span>
             </div>
             <div className="cert-stat-divider-pack"></div>
             <div className="cert-stat-pack">
-              <span className="cert-stat-number">3</span>
+              <span className="cert-stat-number">
+                <Counter end={totalLevels} />
+              </span>
               <span className="cert-stat-label">Levels</span>
             </div>
           </div>

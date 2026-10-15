@@ -1,31 +1,39 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
-  const form = useRef();
+  const [formData, setFormData] = useState({
+    from_name: '',
+    from_email: '',
+    subject: '',
+    message: ''
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus({ type: '', message: '' });
 
+    // Correct Keys & IDs from EmailJS Dashboard
     const serviceId = 'service_203k8kk';
-    const templateId = 'template_9ekkkus';
+    const templateId = '9i09snv'; // Dashboard එකේ URL එකෙන් පෙනෙන නිවැරදි Template ID එක
     const publicKey = 'lpPJ72ssd3a57S3_E';
 
-    // FormData ekata aluthin recipient email eka add karaganna puluwan (Optional)
-    // Nathnam EmailJS dashboard eke template setting wala To Email eka vishwasamuditha8@gmail.com widiyata denna.
-
-    emailjs.sendForm(serviceId, templateId, form.current, publicKey)
+    // Directly pass the form data object
+    emailjs.send(serviceId, templateId, formData, publicKey)
       .then((result) => {
         console.log('Email sent successfully:', result.text);
         setSubmitStatus({
           type: 'success',
           message: '✅ Your message has been sent successfully! I will get back to you soon.'
         });
-        form.current.reset();
+        setFormData({ from_name: '', from_email: '', subject: '', message: '' });
         setIsSubmitting(false);
       }, (error) => {
         console.error('Failed to send email:', error.text);
@@ -52,13 +60,12 @@ const Contact = () => {
           </div>
         )}
         
-        <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-4">
-          {/* Hidden input to ensure email goes to your specific address if template supports it */}
-          <input type="hidden" name="to_email" value="vishwasamuditha8@gmail.com" />
-
+        <form onSubmit={sendEmail} className="flex flex-col gap-4">
           <input 
             type="text" 
             name="from_name"
+            value={formData.from_name}
+            onChange={handleChange}
             placeholder="Your Name" 
             required
             className="w-full p-3 bg-white/5 border border-cyan-400/30 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition"
@@ -66,6 +73,8 @@ const Contact = () => {
           <input 
             type="email" 
             name="from_email"
+            value={formData.from_email}
+            onChange={handleChange}
             placeholder="Your Email" 
             required
             className="w-full p-3 bg-white/5 border border-cyan-400/30 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition"
@@ -73,12 +82,16 @@ const Contact = () => {
           <input 
             type="text" 
             name="subject"
+            value={formData.subject}
+            onChange={handleChange}
             placeholder="Subject" 
             required
             className="w-full p-3 bg-white/5 border border-cyan-400/30 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition"
           />
           <textarea 
             name="message"
+            value={formData.message}
+            onChange={handleChange}
             placeholder="Your Message" 
             rows="4"
             required
