@@ -1,9 +1,6 @@
 import React from 'react';
 import ScrollAnimation from '../ScrollAnimation';
-// Import your logos from the assets folder
-import esuLogo from '../assets/logo/esu Logo.png';
-// Add additional logo imports here as needed, for example:
-// import schoolLogo from '../assets/logo/school-logo.png';
+import esuLogo from '../../assets/logo/esu Logo.png';
 
 const Education = () => {
   const educationData = [
@@ -15,7 +12,7 @@ const Education = () => {
       description: "Completed Ordinary Level education with a strong foundation in mathematics and sciences.",
       icon: "fa-graduation-cap",
       logoType: "emoji",
-      logo: "📚", // Replace with imported image if available
+      logo: "📚",
       achievements: [
         "Passed with Distinction in Mathematics",
         "Excellence in Science Subjects",
@@ -60,7 +57,7 @@ const Education = () => {
       description: "Completed English language diploma to enhance communication and professional skills.",
       icon: "fa-language",
       logoType: "image",
-      logo: esuLogo, // Using your ESU logo asset
+      logo: esuLogo,
       achievements: [
         "Advanced English Proficiency",
         "Business Communication Skills",
@@ -75,7 +72,7 @@ const Education = () => {
       description: "Higher National Diploma in Software Engineering with Pearson UK accreditation.",
       icon: "fa-code",
       logoType: "image",
-      logo: esuLogo, // Using your ESU logo asset
+      logo: esuLogo,
       achievements: [
         "Full Stack Development",
         "Agile Methodologies",
@@ -91,7 +88,7 @@ const Education = () => {
       description: "Bachelor of Engineering with Honours in Software Engineering from London Metropolitan University.",
       icon: "fa-university",
       logoType: "image",
-      logo: esuLogo, // Using your ESU logo asset (or replace with a London Met logo variable if added)
+      logo: esuLogo,
       achievements: [
         "First Class Honours",
         "Cloud Architecture",
