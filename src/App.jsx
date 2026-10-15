@@ -84,95 +84,63 @@ function App() {
     }
   };
 
-  const getSkillLogo = (skillName) => {
-    const logoMap = {
-      'React': '⚛️',
-      'Next.js': '▲',
-      'TypeScript': 'TS',
-      'Tailwind CSS': '🌊',
-      'HTML/CSS': '🖥️',
-      'Node.js': '🟢',
-      'Python': '🐍',
-      'Java': '☕',
-      'PHP': '🐘',
-      'Express.js': '🚂',
-      'MongoDB': '🍃',
-      'MySQL': '🐬',
-      'PostgreSQL': '🐘',
-      'AWS': '☁️',
-      'Docker': '🐳',
-      'Git/GitHub': '🐙',
-      'VS Code': '📝',
-      'Figma': '🎨',
-      'Jira': '📊',
-      'Agile/Scrum': '🔄',
+  // Devicon & CDN SVG Icons mapping for all provided skills
+  const getSkillIcon = (skillName) => {
+    const iconMap = {
+      'Python': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+      'C#': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
+      'Java': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
+      'JavaScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
+      'Typescript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+      'PHP': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg',
+      'SQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg',
+      'SQlite': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg',
+      'NoSQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+      'HTML': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+      'Css3': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+      'Three.js': 'https://cdn.simpleicons.org/threedotjs/white',
+      'React': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+      'Next.js': 'https://cdn.simpleicons.org/nextdotjs/white',
+      'Flutter': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg',
+      'Dart': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg',
+      'Vite': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg',
+      'Tailwind CSS': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg',
+      'Bootstrap': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg',
+      'Node.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+      'Express.js': 'https://cdn.simpleicons.org/express/white',
+      'Asp.net': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg',
+      '.net': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg',
+      'Socket.io': 'https://cdn.simpleicons.org/socketdotio/white',
+      'MERN Stack': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+      'SQL Server': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg',
+      'MySQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+      'MongoDB': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+      'Supabase': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg',
+      'Firebase': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg',
+      'TensorFlow': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg',
+      'Figma': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',
+      'Clerk Auth': 'https://cdn.simpleicons.org/clerk',
+      'Docker': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
+      'Linux': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg',
+      'Vercel': 'https://assets.vercel.com/image/upload/v1588804589/repositories/vercel/logo.png',
+      'Cloudflare': 'https://www.vectorlogo.zone/logos/cloudflare/cloudflare-icon.svg',
+      'Git': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+      'Github': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
+      'Gitlab': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg',
+      'Postman': 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg',
+      'Jules': 'https://cdn.simpleicons.org/googlejules/white',
     };
-    return logoMap[skillName] || '🔄';
+    return iconMap[skillName] || '';
   };
 
-  const skillCategories = [
-    {
-      title: 'Frontend Development',
-      icon: 'fa-laptop-code',
-      skills: [
-        { name: 'React', level: 90 },
-        { name: 'Next.js', level: 85 },
-        { name: 'TypeScript', level: 80 },
-        { name: 'Tailwind CSS', level: 85 },
-        { name: 'HTML/CSS', level: 95 },
-      ]
-    },
-    {
-      title: 'Backend Development',
-      icon: 'fa-server',
-      skills: [
-        { name: 'Node.js', level: 85 },
-        { name: 'Python', level: 80 },
-        { name: 'Java', level: 75 },
-        { name: 'PHP', level: 70 },
-        { name: 'Express.js', level: 85 },
-      ]
-    },
-    {
-      title: 'Database & Cloud',
-      icon: 'fa-database',
-      skills: [
-        { name: 'MongoDB', level: 85 },
-        { name: 'MySQL', level: 80 },
-        { name: 'PostgreSQL', level: 75 },
-        { name: 'AWS', level: 70 },
-        { name: 'Docker', level: 75 },
-      ]
-    },
-    {
-      title: 'Tools & Others',
-      icon: 'fa-tools',
-      skills: [
-        { name: 'Git/GitHub', level: 90 },
-        { name: 'VS Code', level: 95 },
-        { name: 'Figma', level: 80 },
-        { name: 'Jira', level: 75 },
-        { name: 'Agile/Scrum', level: 85 },
-      ]
-    }
-  ];
-
-  const additionalSkills = [
-    { name: 'Redux', logo: '🔄' },
-    { name: 'GraphQL', logo: '📡' },
-    { name: 'Webpack', logo: '📦' },
-    { name: 'Jest', logo: '🧪' },
-    { name: 'Cypress', logo: '🎯' },
-    { name: 'Sass', logo: '💅' },
-    { name: 'REST APIs', logo: '🔗' },
-    { name: 'Microservices', logo: '🧩' },
-    { name: 'Kubernetes', logo: '⎈' },
-    { name: 'Linux', logo: '🐧' },
-    { name: 'Nginx', logo: '🔄' },
-    { name: 'Redis', logo: '🔴' },
-    { name: 'RabbitMQ', logo: '🐰' },
-    { name: 'Firebase', logo: '🔥' },
-    { name: 'Supabase', logo: '⚡' },
+  // Single unified list without categories
+  const allSkills = [
+    'Python', 'C#', 'Java', 'JavaScript', 'Typescript', 'PHP', 'SQL', 'SQlite', 'NoSQL',
+    'HTML', 'Css3', 'Three.js', 'React', 'Next.js', 'Flutter', 'Dart', 'Vite',
+    'Tailwind CSS', 'Bootstrap', 'Node.js', 'Express.js', 'Asp.net', '.net', 'Socket.io',
+    'MERN Stack', 'SQL Server', 'MySQL', 'MongoDB', 'Supabase', 'Firebase', 'TensorFlow',
+    'Figma', 'Clerk Auth', 'Docker', 'Linux', 'Vercel', 'Cloudflare', 'Git', 'Github',
+    'Gitlab', 'Postman', 'Jules'
   ];
 
   return (
@@ -425,11 +393,18 @@ function App() {
               <span className="section-tag">About Me</span>
               <h2>Building Digital Excellence</h2>
               <p>
-                I am a dedicated Software Engineering undergraduate at ESOFT Metro Campus 
-                with a passion for building robust digital systems and creating impactful 
-                visual content. My background blends technical expertise in full-stack 
-                development with practical, hands-on experience in business operations 
-                and digital strategy.
+                I am a Software Engineer holding a BEng (Hons) in 
+                Software Engineering (First Class Honours) awarded 
+                by London Metropolitan University.
+
+                I specialize in building reliable, scalable digital 
+                systems-ranging from cross-platform mobile applications 
+                to full-stack web solutions and cloud backend integrations.
+
+                My background bridges technical precision with hands-on 
+                experience in business operations and creative media, giving 
+                me a product-minded approach to software performance and user 
+                experience.
               </p>
               <div className="tech-stack">
                 <span className="tech-item">React</span>
@@ -474,63 +449,82 @@ function App() {
         <Projects />
       </div>
 
-      <section ref={sectionRefs.skills} id="skills" className="section skills-modern">
+      {/* ================= UNIFIED SKILLS GRID SECTION ================= */}
+      <section ref={sectionRefs.skills} id="skills" className="section skills-modern" style={{ padding: '80px 20px' }}>
         <ScrollAnimation animation="fade-up">
-          <div className="skills-header">
-            <span className="section-tag">My Skills</span>
-            <h2>Technical Expertise</h2>
-            <p>Technologies and tools I work with to build amazing digital solutions</p>
+          <div className="skills-header" style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <span className="section-tag">My Tech Stack</span>
+            <h2>Technologies & Tools</h2>
+            <p>Languages, Frameworks, Databases & Tools I work with</p>
           </div>
 
-          <div className="skills-grid">
-            {skillCategories.map((category, index) => (
-              <ScrollAnimation key={index} animation="fade-up" delay={100 + index * 100}>
-                <div className="skill-category">
-                  <div className="skill-category-header">
-                    <div className="skill-category-icon">
-                      <i className={`fas ${category.icon}`}></i>
-                    </div>
-                    <h3>{category.title}</h3>
-                  </div>
-                  <div className="skill-list">
-                    {category.skills.map((skill, idx) => (
-                      <div key={idx} className="skill-item">
-                        <div className="skill-info">
-                          <span className="skill-name">
-                            <span className="skill-logo">{getSkillLogo(skill.name)}</span>
-                            {skill.name}
-                          </span>
-                          <span className="skill-percentage">{skill.level}%</span>
-                        </div>
-                        <div className="skill-bar">
-                          <div 
-                            className="skill-bar-fill" 
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollAnimation>
-            ))}
-          </div>
-
-          <ScrollAnimation animation="fade-up" delay={500}>
-            <div className="skills-tags">
-              <span className="section-tag">Also Experienced In</span>
-              <div className="tags-cloud">
-                {additionalSkills.map((skill, index) => (
-                  <span key={index} className="tag">
-                    <span className="tag-logo">{skill.logo}</span>
-                    {skill.name}
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <div 
+              style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', 
+                gap: '16px',
+                background: 'rgba(20, 20, 25, 0.4)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderRadius: '24px',
+                padding: '30px'
+              }}
+            >
+              {allSkills.map((skill, idx) => (
+                <div 
+                  key={idx} 
+                  style={{
+                    background: '#0a0a0f',
+                    border: '1px solid #27272a',
+                    borderRadius: '16px',
+                    padding: '20px 10px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '12px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#3b82f6';
+                    e.currentTarget.style.transform = 'translateY(-6px)';
+                    e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(59, 130, 246, 0.25)';
+                    const img = e.currentTarget.querySelector('img');
+                    if (img) img.style.transform = 'scale(1.25)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = '#27272a';
+                    e.currentTarget.style.transform = 'translateY(0px)';
+                    e.currentTarget.style.boxShadow = 'none';
+                    const img = e.currentTarget.querySelector('img');
+                    if (img) img.style.transform = 'scale(1)';
+                  }}
+                >
+                  {getSkillIcon(skill) ? (
+                    <img 
+                      src={getSkillIcon(skill)} 
+                      alt={skill} 
+                      style={{ 
+                        width: '38px', 
+                        height: '38px', 
+                        objectFit: 'contain',
+                        transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)' 
+                      }} 
+                    />
+                  ) : (
+                    <span style={{ fontSize: '32px', transition: 'transform 0.3s ease' }}>💻</span>
+                  )}
+                  <span style={{ color: '#e4e4e7', fontSize: '0.82rem', fontWeight: '500', textAlign: 'center' }}>
+                    {skill}
                   </span>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          </ScrollAnimation>
+          </div>
         </ScrollAnimation>
       </section>
+      {/* ================= END SKILLS SECTION ================= */}
 
       <section ref={sectionRefs.services} id="services" className="section services-modern">
         <ScrollAnimation animation="fade-up">

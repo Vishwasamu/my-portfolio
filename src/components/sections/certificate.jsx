@@ -3,6 +3,9 @@ import React from 'react';
 import ScrollAnimation from '../ScrollAnimation';
 // Image එක import කරන්න
 import uom01 from "../../assets/certificates/uom01.jpeg";
+import certificate01 from "../../assets/certificates/certificate01.jpeg";
+import certificate02 from "../../assets/certificates/certificate02.jpeg";
+import certificate03 from "../../assets/certificates/certificate03.jpeg";
 
 
 const Certificate = () => {
@@ -22,26 +25,24 @@ const Certificate = () => {
     },
     {
       id: 2,
-      title: 'React & Next.js Mastery',
-      issuer: 'Udemy',
+      title: 'Introduction to',
+      issuer: 'Sololearn',
       date: '2023',
       icon: 'fa-react',
       color: '#61dafb',
       description: 'Advanced React concepts, Next.js, and modern frontend development',
-      image: 'certificate02.jpg',
+      image: certificate01,
       link: '#',
-      badge: '🥈',
-      level: 'Intermediate'
     },
     {
       id: 3,
-      title: 'Cloud Computing - AWS',
+      title: 'The Fundamentals of Digital Marketing',
       issuer: 'Amazon Web Services',
       date: '2024',
       icon: 'fa-cloud',
       color: '#ff9900',
       description: 'AWS fundamentals, EC2, S3, Lambda, and cloud architecture',
-      image: '/assets/certificates/aws.jpg',
+      image: certificate02,
       link: '#',
       badge: '🥇',
       level: 'Advanced'
@@ -54,7 +55,7 @@ const Certificate = () => {
       icon: 'fa-python',
       color: '#3776ab',
       description: 'Data analysis, visualization, and machine learning with Python',
-      image: '/assets/certificates/certificate01.jpg',
+      image: certificate03,
       link: '#',
       badge: '🥈',
       level: 'Intermediate'
@@ -118,10 +119,7 @@ const Certificate = () => {
                 {/* Main Card */}
                 <div className="cert-card-main">
                   {/* Badge */}
-                  <div className="cert-badge">
-                    <span>{cert.badge}</span>
-                    <span className="cert-level">{cert.level}</span>
-                  </div>
+                  
 
                   {/* Image */}
                   <div className="certificate-image-wrapper">

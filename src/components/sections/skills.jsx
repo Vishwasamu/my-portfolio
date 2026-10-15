@@ -1,240 +1,189 @@
 import React from 'react';
 import ScrollAnimation from './ScrollAnimation';
 
-// SVG Logo Components
-const ReactLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="6" fill="#61DAFB"/>
-    <g stroke="#61DAFB" strokeWidth="2.5" fill="none">
-      <ellipse rx="24" ry="8" transform="rotate(30 32 32)"/>
-      <ellipse rx="24" ry="8" transform="rotate(90 32 32)"/>
-      <ellipse rx="24" ry="8" transform="rotate(150 32 32)"/>
+const DEV = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons';
+
+// --- Local fallbacks (for logos that don't exist on the Devicon CDN) ---
+const Svg = ({ children }) => (
+  <svg viewBox="0 0 128 128" width="44" height="44">{children}</svg>
+);
+
+const PascalLogo = () => (
+  <Svg>
+    <path d="M64 12C32 12 12 32 12 64s20 52 52 52 52-20 52-52-20-52-52-52zm-12 76V40h24c11 0 18 6 18 18s-7 18-18 18H64v22H52zm12-34h10c4 0 7-2 7-7s-3-7-7-7H64v14z" fill="#E31C25" />
+  </Svg>
+);
+
+const NoSQLLogo = () => (
+  <Svg>
+    <rect x="12" y="12" width="104" height="104" fill="#5B6CF0" />
+    <ellipse cx="64" cy="38" rx="28" ry="10" fill="none" stroke="#fff" strokeWidth="5" />
+    <path d="M36 38v50c0 6 12 12 28 12s28-6 28-12V38M36 63c0 6 12 12 28 12s28-6 28-12" fill="none" stroke="#fff" strokeWidth="5" />
+  </Svg>
+);
+
+const ZustandLogo = () => (
+  <Svg>
+    <circle cx="64" cy="64" r="12" fill="#7C5CFF" />
+    <g stroke="#7C5CFF" strokeWidth="5" fill="none">
+      <ellipse rx="50" ry="18" cx="64" cy="64" />
+      <ellipse rx="50" ry="18" cx="64" cy="64" transform="rotate(60 64 64)" />
+      <ellipse rx="50" ry="18" cx="64" cy="64" transform="rotate(120 64 64)" />
     </g>
-  </svg>
+  </Svg>
 );
 
-const NodeLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#339933"/>
-    <path d="M32 12 L32 52 L52 42 L52 22 Z" fill="#fff" opacity="0.2"/>
-    <text x="32" y="38" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="bold">N</text>
-  </svg>
+const DaisyUILogo = () => (
+  <Svg>
+    <circle cx="64" cy="64" r="48" fill="none" stroke="#570DF8" strokeWidth="6" strokeDasharray="14 6" />
+    <circle cx="64" cy="64" r="34" fill="none" stroke="#570DF8" strokeWidth="5" />
+  </Svg>
 );
 
-const PythonLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#3776AB"/>
-    <text x="32" y="40" textAnchor="middle" fill="#FFD43B" fontSize="22" fontWeight="bold">Py</text>
-  </svg>
+const ShadcnUILogo = () => (
+  <Svg>
+    <line x1="30" y1="104" x2="104" y2="30" stroke="#fff" strokeWidth="9" strokeLinecap="round" />
+    <line x1="52" y1="112" x2="112" y2="52" stroke="#fff" strokeWidth="9" strokeLinecap="round" />
+  </Svg>
 );
 
-const JavaLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#007396"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="18" fontWeight="bold">J</text>
-  </svg>
+const RadixUILogo = () => (
+  <Svg>
+    <rect x="30" y="20" width="26" height="26" fill="#fff" />
+    <circle cx="86" cy="33" r="13" fill="#fff" />
+    <rect x="30" y="56" width="26" height="52" fill="#fff" />
+    <path d="M62 108V56h26l-26 52z" fill="#fff" opacity="0.001" />
+  </Svg>
 );
 
-const PHPLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#777BB4"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="20" fontWeight="bold">PHP</text>
-  </svg>
+const AspNetLogo = () => (
+  <Svg>
+    <path d="M10 82c14-30 40-44 70-30-18-2-30 8-34 34-12-8-24-8-36-4z" fill="#1E88E5" />
+    <path d="M52 94c8-34 26-46 66-38-24 0-36 12-40 38-8-4-16-4-26 0z" fill="#1565C0" />
+  </Svg>
 );
 
-const MongoDBLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#47A248"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">Mongo</text>
-  </svg>
-);
+// invert: true => black logos get flipped to white so they show on the dark card
+const skillItems = [
+  { name: 'Python', icon: `${DEV}/python/python-original.svg` },
+  { name: 'C#', icon: `${DEV}/csharp/csharp-original.svg` },
+  { name: 'Java', icon: `${DEV}/java/java-original.svg` },
+  { name: 'JavaScript', icon: `${DEV}/javascript/javascript-original.svg` },
+  { name: 'TypeScript', icon: `${DEV}/typescript/typescript-original.svg` },
+  { name: 'Pascal', logo: <PascalLogo /> },
+  { name: 'PHP', icon: `${DEV}/php/php-original.svg` },
+  { name: 'SQL', icon: `${DEV}/azuresqldatabase/azuresqldatabase-original.svg` },
 
-const MySQLLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#4479A1"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">SQL</text>
-  </svg>
-);
+  { name: 'NoSQL', logo: <NoSQLLogo /> },
+  { name: 'HTML', icon: `${DEV}/html5/html5-original.svg` },
+  { name: 'CSS3', icon: `${DEV}/css3/css3-original.svg` },
+  { name: 'Three.js', icon: `${DEV}/threejs/threejs-original.svg`, invert: true },
+  { name: 'React', icon: `${DEV}/react/react-original.svg` },
+  { name: 'Next.js', icon: `${DEV}/nextjs/nextjs-original.svg`, invert: true },
+  { name: 'Redux', icon: `${DEV}/redux/redux-original.svg` },
+  { name: 'Zustand', logo: <ZustandLogo /> },
 
-const AWSDLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#FF9900"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">AWS</text>
-  </svg>
-);
+  { name: 'Vite', icon: `${DEV}/vitejs/vitejs-original.svg` },
+  { name: 'Tailwind CSS', icon: `${DEV}/tailwindcss/tailwindcss-original.svg` },
+  { name: 'Bootstrap', icon: `${DEV}/bootstrap/bootstrap-original.svg` },
+  { name: 'Daisy UI', logo: <DaisyUILogo /> },
+  { name: 'Shadcn UI', logo: <ShadcnUILogo /> },
+  { name: 'Radix UI', logo: <RadixUILogo /> },
+  { name: 'Node.js', icon: `${DEV}/nodejs/nodejs-original.svg` },
+  { name: 'Express.js', icon: `${DEV}/express/express-original.svg`, invert: true },
 
-const DockerLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#2496ED"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">Dkr</text>
-  </svg>
-);
+  { name: 'ASP.NET', logo: <AspNetLogo /> },
+  { name: '.NET', icon: `${DEV}/dotnetcore/dotnetcore-original.svg` },
+  { name: 'Flask', icon: `${DEV}/flask/flask-original.svg`, invert: true },
+  { name: 'Socket.io', icon: `${DEV}/socketio/socketio-original.svg`, invert: true },
+  { name: 'MERN Stack', icon: `${DEV}/react/react-original.svg` },
+  { name: 'SQLserver', icon: `${DEV}/microsoftsqlserver/microsoftsqlserver-plain.svg` },
+  { name: 'MySQL', icon: `${DEV}/mysql/mysql-original.svg` },
+  { name: 'MongoDB', icon: `${DEV}/mongodb/mongodb-original.svg` },
+];
 
-const GitLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#F05032"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">Git</text>
-  </svg>
-);
-
-const VSCodeLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#007ACC"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">VS</text>
-  </svg>
-);
-
-const FigmaLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#F24E1E"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">F</text>
-  </svg>
-);
-
-const TypeScriptLogo = () => (
-  <svg viewBox="0 0 64 64" width="28" height="28">
-    <circle cx="32" cy="32" r="28" fill="#3178C6"/>
-    <text x="32" y="40" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">TS</text>
-  </svg>
-);
-
-// Map skill names to SVG logos
-const getSkillLogo = (skillName) => {
-  const logoMap = {
-    'React': <ReactLogo />,
-    'Next.js': <span style={{fontSize: '24px', fontWeight: 'bold', color: '#000'}}>▲</span>,
-    'TypeScript': <TypeScriptLogo />,
-    'Tailwind CSS': <span style={{fontSize: '22px'}}>🌊</span>,
-    'HTML/CSS': <span style={{fontSize: '22px'}}>🖥️</span>,
-    'Node.js': <NodeLogo />,
-    'Python': <PythonLogo />,
-    'Java': <JavaLogo />,
-    'PHP': <PHPLogo />,
-    'Express.js': <span style={{fontSize: '22px'}}>🚂</span>,
-    'MongoDB': <MongoDBLogo />,
-    'MySQL': <MySQLLogo />,
-    'PostgreSQL': <span style={{fontSize: '22px'}}>🐘</span>,
-    'AWS': <AWSDLogo />,
-    'Docker': <DockerLogo />,
-    'Git/GitHub': <GitLogo />,
-    'VS Code': <VSCodeLogo />,
-    'Figma': <FigmaLogo />,
-    'Jira': <span style={{fontSize: '22px'}}>📊</span>,
-    'Agile/Scrum': <span style={{fontSize: '22px'}}>🔄</span>,
-  };
-  return logoMap[skillName] || <span style={{fontSize: '20px'}}>🔄</span>;
+const SkillLogo = ({ skill }) => {
+  if (skill.logo) return skill.logo;
+  return (
+    <img
+      src={skill.icon}
+      alt={skill.name}
+      width="44"
+      height="44"
+      loading="lazy"
+      style={{
+        objectFit: 'contain',
+        filter: skill.invert ? 'invert(1)' : 'none',
+      }}
+    />
+  );
 };
 
 const Skills = () => {
-  const skillCategories = [
-    {
-      title: 'Frontend Development',
-      icon: 'fa-laptop-code',
-      skills: [
-        { name: 'React', level: 90 },
-        { name: 'Next.js', level: 85 },
-        { name: 'TypeScript', level: 80 },
-        { name: 'Tailwind CSS', level: 85 },
-        { name: 'HTML/CSS', level: 95 },
-      ]
-    },
-    {
-      title: 'Backend Development',
-      icon: 'fa-server',
-      skills: [
-        { name: 'Node.js', level: 85 },
-        { name: 'Python', level: 80 },
-        { name: 'Java', level: 75 },
-        { name: 'PHP', level: 70 },
-        { name: 'Express.js', level: 85 },
-      ]
-    },
-    {
-      title: 'Database & Cloud',
-      icon: 'fa-database',
-      skills: [
-        { name: 'MongoDB', level: 85 },
-        { name: 'MySQL', level: 80 },
-        { name: 'PostgreSQL', level: 75 },
-        { name: 'AWS', level: 70 },
-        { name: 'Docker', level: 75 },
-      ]
-    },
-    {
-      title: 'Tools & Others',
-      icon: 'fa-tools',
-      skills: [
-        { name: 'Git/GitHub', level: 90 },
-        { name: 'VS Code', level: 95 },
-        { name: 'Figma', level: 80 },
-        { name: 'Jira', level: 75 },
-        { name: 'Agile/Scrum', level: 85 },
-      ]
-    }
-  ];
-
-  const additionalSkills = [
-    'Redux', 'GraphQL', 'Webpack', 'Jest', 'Cypress',
-    'Sass', 'REST APIs', 'Microservices', 'Kubernetes', 'Linux',
-    'Nginx', 'Redis', 'RabbitMQ', 'Firebase', 'Supabase'
-  ];
-
   return (
-    <section id="skills" className="section skills-modern">
+    <section
+      id="skills"
+      className="section skills-modern"
+      style={{ background: '#000000', padding: '60px 20px', color: '#FFFFFF' }}
+    >
       <ScrollAnimation animation="fade-up">
-        <div className="skills-header">
-          <span className="section-tag">My Skills</span>
-          <h2>Technical Expertise</h2>
-          <p>Technologies and tools I work with to build amazing digital solutions</p>
+        <div className="skills-header" style={{ marginBottom: '40px' }}>
+          <span
+            className="section-tag"
+            style={{ color: '#00E5FF', textTransform: 'uppercase', fontSize: '14px', letterSpacing: '2px', fontWeight: 'bold' }}
+          >
+            My Tech Stack
+          </span>
+          <h2 style={{ fontSize: '42px', fontWeight: '800', marginTop: '10px', letterSpacing: '1px' }}>
+            MY <span style={{ color: '#00E5FF' }}>SKILLS</span>
+          </h2>
+          <div style={{ width: '60px', height: '4px', background: '#00E5FF', marginTop: '10px' }}></div>
         </div>
 
-        <div className="skills-grid">
-          {skillCategories.map((category, index) => (
-            <ScrollAnimation key={index} animation="fade-up" delay={100 + index * 100}>
-              <div className="skill-category">
-                <div className="skill-category-header">
-                  <div className="skill-category-icon">
-                    <i className={`fas ${category.icon}`}></i>
-                  </div>
-                  <h3>{category.title}</h3>
-                </div>
-                <div className="skill-list">
-                  {category.skills.map((skill, idx) => (
-                    <div key={idx} className="skill-item">
-                      <div className="skill-info">
-                        <span className="skill-name">
-                          <span className="skill-logo">{getSkillLogo(skill.name)}</span>
-                          {skill.name}
-                        </span>
-                        <span className="skill-percentage">{skill.level}%</span>
-                      </div>
-                      <div className="skill-bar">
-                        <div 
-                          className="skill-bar-fill" 
-                          style={{ width: `${skill.level}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
+            gap: '20px',
+            maxWidth: '1200px',
+            margin: '0 auto',
+          }}
+        >
+          {skillItems.map((skill) => (
+            <div
+              key={skill.name}
+              style={{
+                background: '#0d0d0d',
+                border: '1px solid #222222',
+                borderRadius: '16px',
+                padding: '24px 12px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '14px',
+                transition: 'all 0.3s ease',
+                cursor: 'pointer',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#00E5FF';
+                e.currentTarget.style.transform = 'translateY(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#222222';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '48px' }}>
+                <SkillLogo skill={skill} />
               </div>
-            </ScrollAnimation>
+              <span style={{ fontSize: '14px', fontWeight: '500', color: '#E0E0E0', textAlign: 'center' }}>
+                {skill.name}
+              </span>
+            </div>
           ))}
         </div>
-
-        {/* Additional Skills - Quick Tags */}
-        <ScrollAnimation animation="fade-up" delay={500}>
-          <div className="skills-tags">
-            <span className="section-tag">Also Experienced In</span>
-            <div className="tags-cloud">
-              {additionalSkills.map((skill, index) => (
-                <span key={index} className="tag">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        </ScrollAnimation>
       </ScrollAnimation>
     </section>
   );
