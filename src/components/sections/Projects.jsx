@@ -1,6 +1,58 @@
 // src/components/sections/projects.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ScrollAnimation from '../ScrollAnimation';
+
+// Counter Component for smooth number animation on scroll
+const Counter = ({ end, duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const counterRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => {
+      if (counterRef.current) {
+        observer.unobserve(counterRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime = null;
+    const animateCount = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percentage = Math.min(progress / duration, 1);
+      
+      const currentCount = Math.floor(percentage * end);
+      setCount(currentCount);
+
+      if (percentage < 1) {
+        requestAnimationFrame(animateCount);
+      } else {
+        setCount(end);
+      }
+    };
+
+    requestAnimationFrame(animateCount);
+  }, [isVisible, end, duration]);
+
+  return <span ref={counterRef}>{count}</span>;
+};
 
 const Projects = () => {
   const [filter, setFilter] = useState('all');
@@ -8,114 +60,75 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: 'E-Commerce Platform',
+      title: 'ZentraStay - Hotel Management System',
       category: 'web',
-      description: 'Full-featured e-commerce platform with payment integration, inventory management, and real-time analytics.',
-      image: '/assets/projects/ecommerce.jpg',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Redux'],
+      description: 'A full-stack web application for hotel management featuring room reservation, guest registration, billing, and administrative dashboards.',
+      image: '/assets/projects/zentrastay.jpg',
+      technologies: ['React.js', 'PHP', 'REST API', 'MySQL', 'CSS3'],
       github: 'https://github.com',
       demo: 'https://demo.com',
       featured: true,
-      icon: 'fa-shopping-cart',
+      icon: 'fa-hotel',
       color: '#0066ff'
     },
     {
       id: 2,
-      title: 'Task Management App',
-      category: 'web',
-      description: 'Collaborative task management application with real-time updates, team spaces, and progress tracking.',
-      image: '/assets/projects/taskmanager.jpg',
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Prisma', 'PostgreSQL'],
+      title: 'ත්‍රිපිටක දේශනා (Tripitaka Deshana)',
+      category: 'mobile',
+      description: 'A cross-platform mobile audio application built for streaming and offline playback of Buddhist sermons hosted on Internet Archive.',
+      image: '/assets/projects/tripitaka.jpg',
+      technologies: ['Flutter', 'Dart', 'Internet Archive API', 'Firebase', 'SQLite'],
       github: 'https://github.com',
       demo: 'https://demo.com',
       featured: true,
-      icon: 'fa-tasks',
-      color: '#61dafb'
-    },
-    {
-      id: 3,
-      title: 'Portfolio Website',
-      category: 'web',
-      description: 'Modern portfolio website with 3D animations, dark mode, and responsive design.',
-      image: '/assets/projects/portfolio.jpg',
-      technologies: ['React', 'Three.js', 'GSAP', 'CSS3'],
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: false,
-      icon: 'fa-user',
+      icon: 'fa-dharmachakra',
       color: '#ff9900'
     },
     {
+      id: 3,
+      title: 'Docu Safe - Secure Vault',
+      category: 'mobile',
+      description: 'An offline-first mobile vault app for storing and organizing encrypted confidential documents with PIN and biometric protection.',
+      image: '/assets/projects/docusafe.jpg',
+      technologies: ['Flutter', 'Dart', 'SQLite', 'Biometric Auth', 'Encryption'],
+      github: 'https://github.com',
+      demo: 'https://demo.com',
+      featured: true,
+      icon: 'fa-user-shield',
+      color: '#4ecdc4'
+    },
+    {
       id: 4,
-      title: 'Weather Dashboard',
-      category: 'web',
-      description: 'Real-time weather dashboard with interactive maps, forecasts, and weather alerts.',
-      image: '/assets/projects/weather.jpg',
-      technologies: ['React', 'Chart.js', 'REST APIs', 'CSS3'],
+      title: 'Chemore Routine Tracker',
+      category: 'mobile',
+      description: 'A daily utility mobile app for managing personal routines, task logging, and offline persistence built using local SQLite architecture.',
+      image: '/assets/projects/chemore.jpg',
+      technologies: ['Flutter', 'Dart', 'SQLite', 'Local Storage'],
       github: 'https://github.com',
       demo: 'https://demo.com',
       featured: false,
-      icon: 'fa-cloud-sun',
+      icon: 'fa-calendar-check',
       color: '#ea4335'
     },
     {
       id: 5,
-      title: 'Blog Platform',
+      title: 'Zentravish / SyMax Platform',
       category: 'web',
-      description: 'Full-stack blog platform with user authentication, comments, and admin dashboard.',
-      image: '/assets/projects/blog.jpg',
-      technologies: ['React', 'Express.js', 'MongoDB', 'JWT', 'Tailwind CSS'],
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: true,
-      icon: 'fa-blog',
-      color: '#3776ab'
-    },
-    {
-      id: 6,
-      title: 'Mobile App UI',
-      category: 'design',
-      description: 'Mobile application UI/UX design with user flows, wireframes, and interactive prototypes.',
-      image: '/assets/projects/mobileui.jpg',
-      technologies: ['Figma', 'Adobe XD', 'UI/UX', 'Prototyping'],
+      description: 'A modern digital service platform showcasing software development services, client portfolio, and interactive contact solutions.',
+      image: '/assets/projects/symax.jpg',
+      technologies: ['React', 'JavaScript', 'Tailwind CSS', 'EmailJS'],
       github: 'https://github.com',
       demo: 'https://demo.com',
       featured: false,
-      icon: 'fa-mobile-alt',
-      color: '#2496ed'
-    },
-    {
-      id: 7,
-      title: 'Analytics Dashboard',
-      category: 'web',
-      description: 'Business intelligence dashboard with interactive charts, data visualization, and reporting.',
-      image: '/assets/projects/analytics.jpg',
-      technologies: ['React', 'D3.js', 'Chart.js', 'Node.js', 'PostgreSQL'],
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: false,
-      icon: 'fa-chart-line',
-      color: '#4ecdc4'
-    },
-    {
-      id: 8,
-      title: 'Social Media App',
-      category: 'web',
-      description: 'Social media platform with posts, likes, comments, and real-time notifications.',
-      image: '/assets/projects/social.jpg',
-      technologies: ['React', 'Firebase', 'Redux', 'Tailwind CSS'],
-      github: 'https://github.com',
-      demo: 'https://demo.com',
-      featured: false,
-      icon: 'fa-users',
-      color: '#764abc'
+      icon: 'fa-laptop-code',
+      color: '#61dafb'
     }
   ];
 
   const categories = [
     { id: 'all', label: 'All Projects' },
+    { id: 'mobile', label: 'Mobile Apps' },
     { id: 'web', label: 'Web Apps' },
-    { id: 'design', label: 'Design' },
     { id: 'featured', label: 'Featured' }
   ];
 
@@ -125,6 +138,11 @@ const Projects = () => {
       ? projects.filter(p => p.featured)
       : projects.filter(p => p.category === filter);
 
+  // Dynamic values calculation
+  const totalProjects = projects.length;
+  const totalFeatured = projects.filter(p => p.featured).length;
+  const totalTechs = new Set(projects.flatMap(p => p.technologies)).size;
+
   return (
     <section className="projects-section" id="projects">
       <div className="projects-container">
@@ -132,7 +150,7 @@ const Projects = () => {
           <div className="projects-header">
             <span className="section-tag">Projects</span>
             <h2>Featured Work</h2>
-            <p>Showcasing my latest projects and creative solutions</p>
+            <p>Showcasing my mobile apps, full-stack systems, and software solutions</p>
           </div>
         </ScrollAnimation>
 
@@ -170,16 +188,16 @@ const Projects = () => {
                       const parent = e.target.parentElement;
                       const icon = document.createElement('div');
                       icon.className = 'project-icon-fallback';
-                      icon.innerHTML = `<i class="fas ${project.icon}" style="color: ${project.color}"></i>`;
+                      icon.innerHTML = `<i class="fas ${project.icon}" style="color: ${project.color}; font-size: 2.5rem;"></i>`;
                       parent.appendChild(icon);
                     }}
                   />
                   <div className="project-overlay">
                     <div className="project-links">
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link" title="GitHub Repo">
                         <i className="fab fa-github"></i>
                       </a>
-                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link">
+                      <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link" title="Live Demo / View">
                         <i className="fas fa-external-link-alt"></i>
                       </a>
                     </div>
@@ -205,22 +223,26 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Projects Stats */}
-        <ScrollAnimation animation="fade-up" delay={600}>
+        {/* Projects Stats with Counter Animation */}
+        <ScrollAnimation animation="fade-up" delay={500}>
           <div className="projects-stats">
             <div className="project-stat">
-              <span className="project-stat-number">{projects.length}</span>
+              <span className="project-stat-number">
+                <Counter end={totalProjects} />
+              </span>
               <span className="project-stat-label">Total Projects</span>
             </div>
             <div className="project-stat-divider"></div>
             <div className="project-stat">
-              <span className="project-stat-number">{projects.filter(p => p.featured).length}</span>
+              <span className="project-stat-number">
+                <Counter end={totalFeatured} />
+              </span>
               <span className="project-stat-label">Featured</span>
             </div>
             <div className="project-stat-divider"></div>
             <div className="project-stat">
               <span className="project-stat-number">
-                {new Set(projects.flatMap(p => p.technologies)).size}
+                <Counter end={totalTechs} />+
               </span>
               <span className="project-stat-label">Technologies</span>
             </div>

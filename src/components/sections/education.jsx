@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ScrollAnimation from '../ScrollAnimation';
+import vijithaCentralLogo from '../../assets/education/vijitha-central-logo.png'; // Import the logo image
 
 // Counter Component for smooth number animation
 const Counter = ({ end, duration = 2000 }) => {
@@ -62,7 +63,7 @@ const Education = () => {
       period: "2014 (Aug)",
       description: "Completed Ordinary Level education with a strong foundation in mathematics and sciences.",
       icon: "fa-graduation-cap",
-      logo: "📚", 
+      logo: vijithaCentralLogo, // Using the school logo
       achievements: [
         "Passed with Distinction in Mathematics",
         "Excellence in Science Subjects",
@@ -76,7 +77,7 @@ const Education = () => {
       period: "2017 (Dec)",
       description: "Completed Advanced Level education specializing in the technology stream.",
       icon: "fa-graduation-cap",
-      logo: "🎓",
+      logo: vijithaCentralLogo, // Using the school logo
       achievements: [
         "Specialized in Mathematics, Physics, and ICT",
         "Advanced Level Certification",
@@ -143,15 +144,13 @@ const Education = () => {
     }
   ];
 
-  // Dynamic values calculation
   const totalQualifications = educationData.length;
   const totalInstitutions = new Set(educationData.map(e => e.institution)).size;
   const totalYears = 12;
-  const totalDegrees = 2; // BEng and HND/Diplomas based on count
+  const totalDegrees = 2;
 
   return (
     <>
-      {/* CSS Styles මෙතැනින් එකතු කර ඇත */}
       <style>{`
         .timeline-logo {
           display: flex;
@@ -195,7 +194,7 @@ const Education = () => {
                   <div className="timeline-content">
                     <div className="timeline-header">
                       <div className="timeline-logo">
-                        {edu.logo && (edu.logo.startsWith('/') || edu.logo.startsWith('http') || edu.logo.endsWith('.png') || edu.logo.endsWith('.jpg') || edu.logo.endsWith('.svg')) ? (
+                        {edu.logo && (typeof edu.logo === 'string' && (edu.logo.startsWith('/') || edu.logo.startsWith('http') || edu.logo.endsWith('.png') || edu.logo.endsWith('.jpg') || edu.logo.endsWith('.svg'))) || typeof edu.logo !== 'string' ? (
                           <img 
                             src={edu.logo} 
                             alt={edu.degree} 
@@ -228,7 +227,6 @@ const Education = () => {
             ))}
           </div>
 
-          {/* Quick Stats with Counter Animation */}
           <ScrollAnimation animation="fade-up" delay={400}>
             <div className="education-stats">
               <div className="stat-card">
